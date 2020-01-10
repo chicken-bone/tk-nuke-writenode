@@ -430,6 +430,7 @@ Gizmo {
   name Write1
   xpos 195
   ypos -34
+  disable {{parent.disable}}
  }
 set N11879e50 [stack 0]
  Output {
