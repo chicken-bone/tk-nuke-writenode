@@ -404,7 +404,9 @@ Gizmo {
     +INVISIBLE
  }
  addUserKnob {20 Metadata}
- addUserKnob {41 metadata l "" -STARTLINE T ModifyMetaData1.metadata}
+ addUserKnob {41 mergeMode l copy T CopyMetaData_input.mergeMode}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 metadata l modify T ModifyMetaData_user.metadata}
  addUserKnob {
     20 Python
     l "Python"
@@ -420,29 +422,48 @@ Gizmo {
 }
  Input {
   inputs 0
+  name metadata
+  xpos -40
+  ypos -177
+  number 1
+ }
+ Input {
+  inputs 0
   name Input
-  xpos 195
-  ypos -74
+  xpos 180
+  ypos -297
  }
  Crop {
   box {0 0 {input.width} {input.height}}
   crop false
   name CropToFormat
   xpos 180
-  ypos -129
+  ypos -225
   disable {{1-parent.croptoformat}}
  }
-  ModifyMetaData {
+ CopyMetaData {
+  inputs 2
+  name CopyMetaData_input
+  xpos 180
+  ypos -177
+ }
+ ModifyMetaData {
+  name ModifyMetaData_user
+  xpos 180
+  ypos -153
+ }
+ ModifyMetaData {
   metadata {
    {set cbfx/ocio/config "\[getenv OCIO]"}
-   {set cbfx/ocio/context/SHOT "\[getenv SHOT]"}
-   {set cbfx/ocio/context/SEQ "\[getenv SEQ]"}
-   {set cbfx/ocio/context/CAMERA_RAW "\[getenv CAMERA_RAW]"}
-   {set cbfx/ocio/context/LUT "\[getenv LUT]"}
+   {set cbfx/ocio/context/shot "\[getenv SHOT]"}
+   {set cbfx/ocio/context/project "\[getenv PROJECT]"}
+   {set cbfx/ocio/context/seq "\[getenv SEQ]"}
+   {set cbfx/ocio/context/camera_raw "\[getenv CAMERA_RAW]"}
+   {set cbfx/ocio/context/lut "\[getenv LUT]"}
   }
-  name ModifyMetaData1
-  xpos 195
-  ypos -81
+  name ModifyMetaData_ocio
+  xpos 180
+  ypos -105
  }
  Write {
   file  "\[python __import__('nuke')._shotgun_write_node_handler.on_compute_path_gizmo_callback() if hasattr(__import__('nuke'), '_shotgun_write_node_handler') else nuke.thisParent().knob('cached_path').value()]"
@@ -450,13 +471,13 @@ Gizmo {
   beforeRender "import nuke\nif hasattr(nuke, \"_shotgun_write_node_handler\"):\n    nuke._shotgun_write_node_handler.on_before_render_gizmo_callback()"
   afterRender "import nuke\nif hasattr(nuke, \"_shotgun_write_node_handler\"):\n    nuke._shotgun_write_node_handler.on_after_render_gizmo_callback()"
   name Write1
-  xpos 195
-  ypos -34
+  xpos 180
+  ypos -69
   disable {{parent.disable}}
  }
  Output {
   name Output1
-  xpos 195
-  ypos 66
+  xpos 180
+  ypos 15
  }
 end_group
