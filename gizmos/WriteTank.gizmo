@@ -460,6 +460,8 @@ Gizmo {
    {set cbfx/ocio/context/seq "\[getenv SEQ]"}
    {set cbfx/ocio/context/camera_raw "\[getenv CAMERA_RAW]"}
    {set cbfx/ocio/context/lut "\[getenv LUT]"}
+   {set cbfx/shotgun/shotgun_config_uri "\[python __import__('sgtk').platform.current_engine().sgtk.configuration_descriptor.get_uri()]"}
+   {set cbfx/shotgun/environment "\[python __import__('sgtk').platform.create_engine_launcher(__import__('sgtk').platform.current_engine().sgtk,__import__('sgtk').platform.current_engine().context,__import__('sgtk').platform.current_engine().name).get_standard_plugin_environment()]"}
   }
   name ModifyMetaData_ocio
   xpos 180
